@@ -27,6 +27,7 @@ body{
 
 html{
     scroll-behavior:smooth;
+    scroll-padding-top:95px;
 }
 
 section{
@@ -74,6 +75,13 @@ nav a{
 
 nav a:hover{
     color:#1f7a45;
+}
+
+nav {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px 0;
 }
 
 /* ============================ */
@@ -471,6 +479,24 @@ footer{
 
 }
 
+@media(max-width:600px){
+    section{ padding:55px 5%; }
+    header{ padding:15px 4%; }
+    .logo{ font-size:28px; }
+    nav a{ margin:0 9px; font-size:14px; }
+    .hero{ min-height:65vh; height:auto; }
+    .hero-content h1{ font-size:44px; }
+    .hero-content p{ font-size:18px; }
+    .titulo{ font-size:34px; margin-bottom:30px; }
+    .titulo-carrito{ font-size:32px; }
+    .nosotros{ padding:25px; }
+    .nosotros-texto h2{ font-size:30px; }
+    .compra-box{ padding:30px 18px; }
+    .compra-box h1{ font-size:30px; }
+    .item-carrito{ gap:10px; align-items:flex-start; }
+    .item-carrito h3{ font-size:16px; }
+}
+
 </style>
 
 </head>
@@ -561,7 +587,7 @@ footer{
 
         <div class="oferta">
 
-            <img src="https://www.nativealimentos.com.br/upload/products/pack-produtos/native-pack-cereais-matinais-cabecalho-categoria-6674.png">
+            <img alt="Cereal familiar en oferta" src="https://www.nativealimentos.com.br/upload/products/pack-produtos/native-pack-cereais-matinais-cabecalho-categoria-6674.png">
 
             <div class="oferta-info">
 
@@ -581,7 +607,7 @@ footer{
 
         <div class="oferta">
 
-            <img src="https://assets.debate.com.mx/__export/1743918366762/sites/debate/img/2025/04/05/jarrito.png_723803319.png">
+            <img alt="Refrescos en oferta" src="https://assets.debate.com.mx/__export/1743918366762/sites/debate/img/2025/04/05/jarrito.png_723803319.png">
 
             <div class="oferta-info">
 
@@ -662,7 +688,7 @@ style="display:none;">
         </h1>
 
         <p>
-            Tu pedido llegará en menos de 24 horas.
+            Esta es una demostración del carrito. No se ha enviado ningún pedido.
         </p>
 
     </div>
@@ -679,7 +705,7 @@ style="display:none;">
 
         <div class="nosotros-contenido">
 
-            <img src="https://scontent.fpbc5-1.fna.fbcdn.net/v/t39.30808-6/292578232_108512548589089_3879274107222484780_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=j9IbL-5GudQQ7kNvwFdHfzQ&_nc_oc=Ado9xvLFuk56S_iry3xWjiCT9evef8CfNLkSz78Mdt4mZAVXuTwiq0xr1DmXTP1mDv4&_nc_zt=23&_nc_ht=scontent.fpbc5-1.fna&_nc_gid=-I1J8iZKZ19ZfhthWolK4w&_nc_ss=7b2a8&oh=00_Af5AvLJErw2245JkDS8M2HqhWcWfi_sH9UWVQp04bcy7mQ&oe=6A20DA9D">
+            <img alt="Imagen del supermercado La Primera" src="https://scontent.fpbc5-1.fna.fbcdn.net/v/t39.30808-6/292578232_108512548589089_3879274107222484780_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=j9IbL-5GudQQ7kNvwFdHfzQ&_nc_oc=Ado9xvLFuk56S_iry3xWjiCT9evef8CfNLkSz78Mdt4mZAVXuTwiq0xr1DmXTP1mDv4&_nc_zt=23&_nc_ht=scontent.fpbc5-1.fna&_nc_gid=-I1J8iZKZ19ZfhthWolK4w&_nc_ss=7b2a8&oh=00_Af5AvLJErw2245JkDS8M2HqhWcWfi_sH9UWVQp04bcy7mQ&oe=6A20DA9D">
 
             <div class="nosotros-texto">
 
@@ -751,16 +777,16 @@ style="display:none;">
 
         </div>
 
-        <form>
+        <form id="formulario-contacto">
 
-            <input type="text"
-            placeholder="Nombre">
+            <input type="text" name="nombre"
+            placeholder="Nombre" required>
 
-            <input type="email"
-            placeholder="Correo Electrónico">
+            <input type="email" name="correo"
+            placeholder="Correo Electrónico" required>
 
-            <textarea
-            placeholder="Enviar mensaje"></textarea>
+            <textarea name="mensaje"
+            placeholder="Enviar mensaje" required></textarea>
 
             <button type="submit">
                 Enviar Mensaje
@@ -898,10 +924,14 @@ function mostrarCategoria(categoria){
 
     contenedor.innerHTML = "";
 
+    if (!categorias[categoria]) return;
+
     categorias[categoria].forEach(producto => {
 
-        let precio =
-        Math.floor(Math.random()*200)+20;
+        if (producto.precio === undefined) {
+            producto.precio = Math.floor(Math.random()*200)+20;
+        }
+        const precio = producto.precio;
 
         contenedor.innerHTML += `
 
@@ -944,7 +974,7 @@ mostrarCategoria('lacteos');
 const productosTienda = [
 
 {
-    nombre:"Detergente Líquido Ariel Limpieza Profunda a la Primera Rinde 50% Más Cargas' 4.8 l",
+    nombre:"Detergente Líquido Ariel Limpieza Profunda a la Primera Rinde 50% Más Cargas, 4.8 l",
     imagen:"https://i5.walmartimages.com/asr/90b77ef6-adb7-4b12-8063-079e9ad4e1c2.a803c55124bc22a7ba12e3c4f6e71fae.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF"
 },
 
@@ -1017,6 +1047,8 @@ let total = 0;
 
 function agregarCarrito(nombre, precio){
 
+    document.getElementById("compra-realizada").style.display = "none";
+
     carrito.push({
         nombre,
         precio
@@ -1058,6 +1090,11 @@ function actualizarCarrito(){
 
 function finalizarCompra(){
 
+    if(carrito.length === 0){
+        alert("Primero agrega algún producto al carrito.");
+        return;
+    }
+
     document.getElementById("compra-realizada")
     .style.display = "block";
 
@@ -1066,16 +1103,22 @@ function finalizarCompra(){
 
     actualizarCarrito();
 
-    window.scrollTo({
-
-        top:document.body.scrollHeight,
-        behavior:"smooth"
-
-    });
+    document.getElementById("compra-realizada")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
 
 }
 
+// El formulario necesita un servicio externo o backend para enviar mensajes de verdad.
+document.getElementById("formulario-contacto").addEventListener("submit", function(event){
+    event.preventDefault();
+    alert("Formulario de demostración: el mensaje no se ha enviado. Para recibirlo hace falta configurar un servicio de contacto.");
+});
+
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
